@@ -20,7 +20,7 @@
             getWeatherBtn.addEventListener('click', async () => {
                 const cities = cityInput.value.split(',').map(city => city.trim());
 
-                const response = await fetch('/getWeather', {
+                const response = await fetch('https://weather-app-sxw6.onrender.com/getWeather', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
