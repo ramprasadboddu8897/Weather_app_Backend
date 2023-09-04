@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+</head>
+<body>
+    <h1>Weather App</h1>
+    <input type="text" id="cityInput" placeholder="Enter cities (comma-separated)">
+    <button id="getWeatherBtn">Get Weather</button>
+    <div id="weatherResults"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const getWeatherBtn = document.getElementById('getWeatherBtn');
+            const cityInput = document.getElementById('cityInput');
+            const weatherResults = document.getElementById('weatherResults');
+
+            getWeatherBtn.addEventListener('click', async () => {
+                const cities = cityInput.value.split(',').map(city => city.trim());
+
+                const response = await fetch('/getWeather', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ cities }),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const weatherHTML = Object.entries(data.weather).map(([city, temperature]) => {
+                        return `<p>${city}: ${temperature}</p>`;
+                    }).join('');
+                    weatherResults.innerHTML = weatherHTML;
+                } else {
+                    weatherResults.innerHTML = 'Error fetching weather data';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
