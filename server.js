@@ -2,6 +2,7 @@ import express from 'express';
 import axios from 'axios';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 
 const app = express();
@@ -11,6 +12,7 @@ const port = process.env.PORT || 3000;
 const API_KEY=process.env.API_KEY || '46bacfbd5a1be673252149fb3bf92ab7';
 
 app.use(bodyParser.json());
+app.use(cors);
 
 // Weather API endpoint (e.g., OpenWeatherMap)
 const WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/weather';
